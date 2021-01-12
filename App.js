@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image, TextInput, Button, Modal, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image, TextInput, Button, Modal, SafeAreaView, ScrollView, Alert } from 'react-native';
 
 const emoji = require("./assets/emoji.png")
 const icon = require("./assets/icon.png")
@@ -103,7 +103,7 @@ const UserHeader = () => {
     );
   }
   return (
-          <View
+    <View
       style={{
         backgroundColor: "orange",
         height: 70,
@@ -149,9 +149,27 @@ const ArticleScrollView = () => {
     <View style={{ width: "100%", height: 50, padding: 10, margin: 10 }}>
       <Text>"NDUIeshnfdabsfkndasun eaklfjbads fkjdaslbf dsakhjbfajdmf yaiwelfb adskhf vadsiyulfb asyhilfbasd f</Text>
     </View>
-    <Button title ="Load more"></Button>
+    <LoadingView/>
+
     </ScrollView>
   );
+};
+
+const LoadingView = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  return (
+    <Button title ="Load more" onPress={createAlert}></Button>
+  )
+}
+
+const createAlert = () => {
+  Alert.alert('Unable to load!', 'Unable to find more articles', [
+    {
+      text: 'OK',
+      onPress: () => {setIsLoading(false)},
+    },
+  ]);
 };
 
 const styles = StyleSheet.create({
