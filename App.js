@@ -25,12 +25,19 @@ const Header = ({ backgroundColor, currentUser, setCurrentUser, isVisible, setIs
         >
           <Image source={require("./assets/emoji.png")} style={{ width: 50, height: 50, marginLeft: 15 }}/>
         </TouchableOpacity>
-        <UserModal isVisible={isVisible} setIsVisible ={setIsVisible}/>
+        <UserModal isVisible={isVisible} setIsVisible ={setIsVisible} setCurrentUser={setCurrentUser}/>
     </View>
   );
 };
 
-const UserModal = ({isVisible, setIsVisible}) => {
+const UserModal = ({isVisible, setIsVisible, currentUser, setCurrentUser}) => {
+
+  let userName = ""
+
+  const handleChangeText = (value) => {
+    userName = value;
+  }
+
   return (
       <Modal visible={isVisible} transparent>
         <View
@@ -47,8 +54,8 @@ const UserModal = ({isVisible, setIsVisible}) => {
             }}
           >
             <Text>Name:</Text>
-            <TextInput style={{ padding: 8, backgroundColor: "#F2F2F2", textAlignVertical: 'top'}} placeholder="Enter some text" />
-            <Button title="Hide Modal" onPress={() => setIsVisible(false)} style={{width: 20, paddingTop: 20}} />
+            <TextInput style={{ padding: 8, backgroundColor: "#F2F2F2", textAlignVertical: 'top'}} placeholder="Enter name" value={currentUser} onChangeText={handleChangeText} />
+            <Button title="Submit" onPress={() => {setIsVisible(false), setCurrentUser(userName)}} style={{paddingTop: 20}} />
           </View>
         </View>
       </Modal>
