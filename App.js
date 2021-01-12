@@ -122,9 +122,33 @@ export default function App() {
     <View style={styles.container}>
       <SafeArea></SafeArea>
       <UserHeader/>
+      <ArticleScrollView/>
     </View>
   );
 }
+
+const ArticleScrollView = () => {
+  return (
+    <ScrollView>
+    <View style={{ width: "90%", height: 200, padding: 10, margin: 10}}>
+      <Text>Lots of text in this here article</Text>
+    </View>
+    <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
+      <Text>Even more in this. Just a bunch of text in this here article</Text>
+    </View>
+    <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
+      <Text>Even more text like you wouldn even believe. Not even kidding. Didn't have time to look into lorem ipsum.</Text>
+    </View>
+    <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
+      <Text>Got incredibly lazy here and just... gave up I guess. So here's some random jibberish from now on</Text>
+    </View>
+    <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
+      <Text>"NDUIeshnfdabsfkndasun eaklfjbads fkjdaslbf dsakhjbfajdmf yaiwelfb adskhf vadsiyulfb asyhilfbasd f</Text>
+    </View>
+    <Button title ="Load more"></Button>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
