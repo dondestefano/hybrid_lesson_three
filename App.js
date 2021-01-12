@@ -30,10 +30,14 @@ const UserImage = ({currentUser, setCurrentUser, currentImage, titleVisible}) =>
 
 const UserModal = ({isVisible, setIsVisible, currentUser, setCurrentUser}) => {
 
-  let userName = ""
+  let userName = "Guest"
 
   const handleChangeText = (value) => {
-    userName = value;
+    if (value === "") {
+      userName = "Guest"
+    } else {
+      userName = value;
+    }
   }
 
   return (
@@ -76,19 +80,19 @@ const SafeArea = () => {
 }
 
 const UserHeader = () => {
-  const [currentUser, setCurrentUser] = useState("");
-
+  const [currentUser, setCurrentUser] = useState("Guest");
   let CurrentImageComponent;
-  if (currentUser === "") {
+  if (currentUser === "Guest") {
     CurrentImageComponent = (
       <UserImage
-        currentUser="Guest"
+        currentUser={currentUser}
         setCurrentUser={setCurrentUser}
         currentImage={icon}
         titleVisible={false}
       />
     );
   } else {
+
     CurrentImageComponent = (
       <UserImage
         currentUser={currentUser}
@@ -129,8 +133,8 @@ export default function App() {
 
 const ArticleScrollView = () => {
   return (
-    <ScrollView>
-    <View style={{ width: "90%", height: 200, padding: 10, margin: 10}}>
+    <ScrollView style={{height: "80%"}}>
+    <View style={{ width: "90%", height: 200, padding: 15, margin: 10}}>
       <Text>Lots of text in this here article</Text>
     </View>
     <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
@@ -142,7 +146,7 @@ const ArticleScrollView = () => {
     <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
       <Text>Got incredibly lazy here and just... gave up I guess. So here's some random jibberish from now on</Text>
     </View>
-    <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
+    <View style={{ width: "100%", height: 50, padding: 10, margin: 10 }}>
       <Text>"NDUIeshnfdabsfkndasun eaklfjbads fkjdaslbf dsakhjbfajdmf yaiwelfb adskhf vadsiyulfb asyhilfbasd f</Text>
     </View>
     <Button title ="Load more"></Button>
