@@ -1,124 +1,134 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ImageBackground, Image, TextInput, Button, Modal, SafeAreaView, ScrollView } from 'react-native';
 
-const Header = (currentUser, setCurrentUser, currentImage, isVisible, setIsVisible) => {
+
+const Header = ({ backgroundColor, currentUser, setCurrentUser, isVisible, setIsVisible }) => {
   return (
-    <View style={styles.header}>
-        <Text style={{fontSize: 20}}>Hello {currentUser}!</Text>
-          <ImageBackground
-            source={currentImage}
-            style={{
-            width: 200,
-            alignItems: "bottom",
-          }}>
-           <Text 
-              style={{ 
-                textAlign: 'center' }}>{currentUser}
-            </Text>
-          </ImageBackground>
+    <View
+      style={{
+        backgroundColor: backgroundColor,
+        height: 70,
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 20,
+        flexDirection: "row"
+      }}
+    >
+      <Text style={{
+        fontSize: 20
+      }}>Welcome {currentUser}!</Text>
 
-        <Modal 
-          setCurrentUser = {setCurrentUser}
-          isVisible = {isVisible} />
+<TouchableOpacity
+          onPress={() => setIsVisible(true)}
+          activeOpacity={0.8}
+        >
+          <Image source={require("./assets/emoji.png")} style={{ width: 50, height: 50, marginLeft: 15 }}/>
+        </TouchableOpacity>
+        <UserModal isVisible={isVisible} setIsVisible ={setIsVisible}/>
     </View>
   );
-}
+};
 
-const Modal = (setCurrentUser, isVisible) => {
-  let textInput = "";
+const UserModal = ({isVisible, setIsVisible}) => {
   return (
-    <View>
       <Modal visible={isVisible} transparent>
         <View
-          style={{ ...styles.container, backgroundColor: 'rgba(1, 1, 1, 0.2)' }}
+          style={{ ...styles.container, backgroundColor: 'rgba(1, 1, 1, 0.2)', height: "100%", width: "100%", alignItems: "center", justifyContent: "center" }}
         >
           <View
             style={{
               ...styles.container,
-              backgroundColor: 'yellow',
-              flex: 0.5,
+              backgroundColor: 'grey',
+              height: "20%",
               width: '60%',
+              padding: 20,
+              justifyContent: "center",
             }}
           >
-            <TextInput style={{ padding: 8, backgroundColor: "#F2F2F2", textAlignVertical: 'top'}} placeholder="Enter name" onChangeText = {text => textInput = text}/>
-            <Button title="Submit" onPress={() => {setIsVisible(false), setCurrentUser(textInput)}} />
-            <TouchableOpacity onPress={() => setIsVisible(false)}>
-              <Image
-                source={require('./assets/emoji.png')}
-                style={{ width: 50, height: 50 }}
-              />
-            </TouchableOpacity>
+            <Text>Name:</Text>
+            <TextInput style={{ padding: 8, backgroundColor: "#F2F2F2", textAlignVertical: 'top'}} placeholder="Enter some text" />
+            <Button title="Hide Modal" onPress={() => setIsVisible(false)} style={{width: 20, paddingTop: 20}} />
           </View>
         </View>
       </Modal>
-    </View>
   );
 };
 
-const CurrentHeader = () => {
-  const [currentUser, setCurrentUser] = useState("L");
+const SafeArea = () => {
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: 25,
+        ...Platform.select({
+          ios: { backgroundColor: 'yellow' },
+          android: { backgroundColor: 'lightblue' },
+        }),
+      }}
+    ></SafeAreaView>
+  )
+}
+
+const UserHeader = () => {
+  const [currentUser, setCurrentUser] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
-  const loggedIn = require("./assets/emoji.png")
-  const notloggedIn = require("./assets/icon.png")
-
-  let CurrentHeaderComponent
-
-  if (currentUser === "L") {
-    CurrentHeaderComponent = (
-      <Header 
-        currentUser= "Guest" 
-        setCurrentUser = {setCurrentUser}
-        image = {loggedIn}
+  let CurrentScreenComponent;
+  if (currentUser === "") {
+    CurrentScreenComponent = (
+      <Header
+        backgroundColor="orange"
+        currentUser="Guest"
+        setCurrentUser={setCurrentUser}
         isVisible = {isVisible}
         setIsVisible = {setIsVisible}
-        />
-    )
-   } else {
-    CurrentHeaderComponent = (
-      <Header 
-        currentUser = {currentUser} 
-        setCurrentUser = {setCurrentUser}
-        image = {loggedIn}
+      />
+    );
+  } else {
+    CurrentScreenComponent = (
+      <Header
+        backgroundColor="yellow"
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
         isVisible = {isVisible}
         setIsVisible = {setIsVisible}
-        />
-    )
-   }
-   return (
+      />
+    );
+  }
+  return (
     <View style={styles.container}>
-      <Text>The screen:</Text>
-      {CurrentHeaderComponent}
+      {CurrentScreenComponent}
     </View>
   );
 };
-
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hej</Text>
-      <CurrentHeader/>
+      <SafeArea></SafeArea>
+      <UserHeader/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
 
   header: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     width: "100%",
     height: 70,
     alignItems:"center",
-    marginVertical: 8,
-    backgroundColor: 'blue'
+    marginVertical: 8
   },
+
+  text: {
+      color: "#00b9bc",
+      fontWeight: "bold",
+      fontSize: 18
+  }
 });
