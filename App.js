@@ -17,9 +17,12 @@ const UserImage = ({currentUser, setCurrentUser, currentImage, titleVisible}) =>
         >
     
        <ImageBackground source={currentImage} style={{ width: 50, height: 50, marginLeft: 15 }}>
-         <View visible = {titleVisible} style={{backgroundColor: "white"}}>
+
+       {titleVisible ? (         
+       <View style={{backgroundColor: "white"}}>
            <Text>{currentUser}</Text>
-        </View>       
+        </View>       ) 
+        : null}
       </ImageBackground>
 
       </TouchableOpacity>
@@ -57,7 +60,7 @@ const UserModal = ({isVisible, setIsVisible, currentUser, setCurrentUser}) => {
           >
             <Text>Name:</Text>
             <TextInput style={{ padding: 8, backgroundColor: "#F2F2F2", textAlignVertical: 'top'}} placeholder="Enter name" value={currentUser} onChangeText={handleChangeText} />
-            <Button title="Submit" onPress={() => {setIsVisible(false), setCurrentUser(userName)}} style={{paddingTop: 20}} />
+            <Button title="Submit" onPress={() => {setIsVisible(false); setCurrentUser(userName)}} style={{paddingTop: 20}} />
           </View>
         </View>
       </Modal>
@@ -133,7 +136,7 @@ export default function App() {
 
 const ArticleScrollView = () => {
   return (
-    <ScrollView style={{height: "80%"}}>
+    <ScrollView style={{height: "85%"}}>
     <View style={{ width: "90%", height: 200, padding: 15, margin: 10}}>
       <Text>Lots of text in this here article</Text>
     </View>
@@ -141,7 +144,7 @@ const ArticleScrollView = () => {
       <Text>Even more in this. Just a bunch of text in this here article</Text>
     </View>
     <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
-      <Text>Even more text like you wouldn even believe. Not even kidding. Didn't have time to look into lorem ipsum.</Text>
+      <Text>Even more text like you wouldn't even believe. Not even kidding. Didn't have time to look into lorem ipsum.</Text>
     </View>
     <View style={{ width: "100%", height: 200, padding: 10, margin: 10 }}>
       <Text>Got incredibly lazy here and just... gave up I guess. So here's some random jibberish from now on</Text>
@@ -150,7 +153,6 @@ const ArticleScrollView = () => {
       <Text>"NDUIeshnfdabsfkndasun eaklfjbads fkjdaslbf dsakhjbfajdmf yaiwelfb adskhf vadsiyulfb asyhilfbasd f</Text>
     </View>
     <LoadingView/>
-
     </ScrollView>
   );
 };
@@ -167,7 +169,7 @@ const createAlert = () => {
   Alert.alert('Unable to load!', 'Unable to find more articles', [
     {
       text: 'OK',
-      onPress: () => {setIsLoading(false)},
+      onPress: () => {{() => setIsLoading(false); createAlert;}},
     },
   ]);
 };
